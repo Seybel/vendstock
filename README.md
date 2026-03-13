@@ -250,15 +250,6 @@ npm run typecheck
 Backend: strict mode, CommonJS, `@/*` path alias.
 Frontend: strict mode, ESNext/bundler resolution, `@/*` path alias.
 
-## Production Considerations
-
-Before deploying:
-
-1. **Change `JWT_SECRET`** in `docker-compose.yml` to a long random string.
-2. **Restrict `CORS_ORIGIN`** to your actual frontend domain.
-3. **SQLite persistence**: The `sqlitedata` Docker volume persists the database across container restarts. For high-availability, migrate to PostgreSQL (update `schema.prisma` provider to `postgresql`).
-4. **HTTPS**: Put Nginx or a load balancer in front with TLS termination.
-
 ## Features
 
 - Secure authentication — bcrypt password hashing (12 rounds), 24h JWT tokens
