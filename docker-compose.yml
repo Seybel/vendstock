@@ -1,0 +1,44 @@
+networks:
+  vendstock_net:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: packages/backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: file:./dev.db
+      JWT_SECRET: vendstock-super-secret-jwt-key-change-in-production
+      PORT: "4000"
+      NODE_ENV: production
+      CORS_ORIGIN: http://localhost:3001
+    ports:
+      - "4001:4000"
+    volumes:
+      - sqlitedata:/app/packages/backend/prisma
+    networks:
+      - vendstock_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    networks:
+      - vendstock_net
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  sqlitedata:
