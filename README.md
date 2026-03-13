@@ -1,6 +1,6 @@
 # VendStock
 
-Inventory and order management system for Instagram vendors. Manage products, track stock levels, create orders, and monitor business metrics through a clean, responsive web interface.
+Inventory and order management system for vendors. Manage products, track stock levels, create orders, and monitor business metrics through a clean, responsive web interface.
 
 ## Tech Stack
 
